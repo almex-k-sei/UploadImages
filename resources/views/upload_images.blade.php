@@ -32,7 +32,7 @@
             <label class="mr-2 text-gray-800 font-semibold">
                 ユーザー名で絞り込み
                 <select onchange="this.form.submit()" name="selectbox"
-                    class="border border-gray-300 px-2 py-1 rounded focus:outline-none focus:border-blue-500">
+                    class="border border-gray-300 px-2 py-1 rounded focus:osutline-none focus:border-blue-500">
                     <option value="">-</option>
                     @foreach ($user_data as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -41,7 +41,9 @@
             </label>
         </form>
     </div>
-    <a href="upload_form" class="text-blue-500 hover:underline mb-4 block">フォームへ移動</a>
+    <form action="upload_form" method="GET">
+        <button type="submit" class="text-blue-500 hover:underline mb-4 block">フォームへ移動</button>
+    </form>
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border-collapse border border-gray-300">
             <thead>
@@ -66,10 +68,10 @@
                         ユーザー名</th>
                     <th
                         class="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase border-b border-gray-300">
-                        </th>
+                    </th>
                     <th
                         class="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase border-b border-gray-300">
-                        </th>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -124,4 +126,3 @@
     </div>
 </body>
 
-</html>

@@ -32,7 +32,11 @@ class UploadImageController extends Controller
         /* UploadImage オブジェクトを生成 */
         $upload_image = new UploadImage();
         $upload_image->filename = $request->image->getClientOriginalName();
-        $upload_image->memo = $request->memo;
+        if(!isset($request->memo)){
+            $upload_image->memo = "";
+        }else{
+            $upload_image->memo = $request->memo;
+        }
         $upload_image->filepath = $file_path;
         $upload_image->user_id = Auth::id();
 
@@ -86,6 +90,15 @@ class UploadImageController extends Controller
     public function update(Request $request, $id)
     {
         $update_image = UploadImage::find($id);
+        $request->validate([
+            'name' => 'required'
+        ]
+        ,
+        [
+            'name.required' => 'ファイル名が未入力です',
+        ]);
+        $extension = substr($update_image->filename, strrpos($update_image->filename, '.'));
+        $update_image->filename = $request->name.$extension;
         if(isset($request->image)){
             $request->validate([
                 'image' => 'required|max:1024|mimes:jpg,jpeg,png,gif'
@@ -94,7 +107,11 @@ class UploadImageController extends Controller
             $update_image->filename = $request->image->getClientOriginalName();
             $update_image->filepath = $file_path;
         }
-        $update_image->memo = $request->memo;
+        if(!isset($request->memo)){
+            $update_image->memo = "";
+        }else{
+            $update_image->memo = $request->memo;
+        }
         $update_image->save();
 
         return redirect('/upload_images');
